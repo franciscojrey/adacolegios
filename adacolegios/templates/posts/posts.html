@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block main %}
+    <div class="jumbotron">
+        {% include 'includes/_messages.html' %}
+        <h1>Tareas</h1>
+        <hr class="my-4">
+        <table class="table table-striped">
+            <tr>
+                <th>Título</th>
+                <th>Fecha de creación</th>
+                <th>Materia</th>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td><a href="post/{{post.0}}">{{post.1}}</a></td>
+                <td>{{post.2 | safe}}</td>
+                <td>{{post.3}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <ul class="list-group">
+        </ul>
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                {% for i in range(1,cantidad_paginas) %}
+                <li class="page-item"><a class="page-link" href="{{url_for('posts', pagina = i)}}">{{i}}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+

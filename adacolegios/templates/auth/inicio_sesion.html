@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block main %}
+
+<div class="jumbotron">
+    {% include 'includes/_messages.html' %}
+    <h1>Inicio de sesión</h1>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label>Correo</label>
+            <input type="text" name="email" pattern="[A-za-z0-9@.]{8,80}" class="form-control" value="{{request.form.email}}">
+        </div>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" name="contraseña" pattern="[A-za-z0-9.!#$%&'*+-|=?^-`{\}~]{8,20}" class="form-control" value="{{request.form.contraseña}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        <label><a href="{{ url_for('recuperar_contraseña') }}">¿Olvidaste tu contraseña?</a></label>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Recuperar contraseña{% endblock %}
+
+{% block main %}
+
+<div class="jumbotron">
+    {% include 'includes/_messages.html' %}
+    <legend>Ingresa tu correo electrónico y te enviaremos un email para que puedas restablecer tu contraseña.</legend>
+    <form method="POST" action="">
+        <div class="form-group">
+            <input type="text" name="email" pattern="[A-za-z0-9@.]{8,80}" class="form-control" value="{{request.form.email}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+{% endblock %}

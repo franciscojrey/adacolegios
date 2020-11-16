@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="jumbotron">
+        <h3>Materia: {{post.7}}</h3>
+        <small>Creado por {{post.1}} el día {{post.3}}</small>
+        <hr>
+        <h1>{{post.0}}</h1>
+        <hr>
+        <div>
+            <p>{{post.2 | safe}}</p>
+        </div>
+    </div>
+{% endblock %}

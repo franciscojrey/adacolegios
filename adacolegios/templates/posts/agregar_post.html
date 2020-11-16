@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="jumbotron">
+    {% include 'includes/_messages.html' %}
+    <h1>Agregar tarea</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Título</label>
+            <!--<input type="text" name="titulo" pattern="[A-za-z0-9{8,80}" class="form-control" value="{{request.form.titulo}}" required>-->
+            <input type="text" name="titulo" class="form-control" value="{{request.form.titulo}}">
+        </div>
+        <div class="form-group">
+            <label>Texto</label>
+            <!--<input type="text" name="texto" pattern="[A-za-z0-9{8,80}" class="form-control" id="editor" value="{{request.form.titulo}}" required>-->
+            <input type="text" name="texto" class="form-control" value="{{request.form.texto}}">
+        </div>
+        <div class="form-group">
+            <label>Elija los cursos que desea que vean el comunicado:</label>
+            {% for materia in materias_checkbox %}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" name="materia" aria-label="Checkbox for following text input" value={{materia.5}}>
+                  </div>
+                </div>
+                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Nivel: {{ materia.0 }} - Curso: {{ materia.1 }} - División: {{ materia.2 }} - Materia {{materia.4}}" disabled>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-success">Guardar artículo</button>
+        <a href="/administrar_posts" class="btn btn-warning">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
