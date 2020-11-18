@@ -52,7 +52,7 @@
               Usuarios
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('registro') }}">Registrar usuario</a>
+              <a class="dropdown-item" href="{{ url_for('registro') }}">Agregar usuario</a>
               <a class="dropdown-item" href="{{ url_for('administrar_perfiles') }}">Administrar perfiles</a>
             </div>
           </li>
@@ -62,7 +62,7 @@
               Mi cuenta
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('perfil') }}">Información</a>
+              <!--<a class="dropdown-item" href="{{ url_for('perfil') }}">Información</a>-->
               <a class="dropdown-item" href="/cerrar_sesion" onclick="return confirm('¿Está seguro que desea cerrar sesión?')">Cerrar sesión</a>
             </div>
           </li>

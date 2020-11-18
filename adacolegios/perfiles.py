@@ -153,10 +153,9 @@ def agregar_perfil():
 	if request.method == 'POST':
 		codigo_perfil = request.form['codigo_perfil']
 		nombre_perfil = request.form['nombre_perfil']
-		nombre_completo_perfil = request.form['nombre_completo_perfil']
 		with pyodbc.connect(conx_string) as conx:
 			cursor = conx.cursor()
-			cursor.execute('EXEC SP_AgregarPerfil @codigo = ?, @nombre = ?, @nombre_completo = ?', (codigo_perfil, nombre_perfil, nombre_completo_perfil))
+			cursor.execute('EXEC SP_AgregarPerfil @codigo = ?, @nombre = ?', (codigo_perfil, nombre_perfil))
 		flash('Tarea creada correctamente.', 'success')
 		return redirect(url_for('administrar_perfiles'))
 	return render_template('perfiles/agregar_perfil.html')
@@ -170,14 +169,12 @@ def editar_perfil(codigo):
 	form = PerfilFormulario(request.form)
 	form.codigo_formulario.data = perfil[0]
 	form.nombre.data = perfil[1]
-	form.nombre_completo.data = perfil[1]
 	if request.method == 'POST':
 		codigo_formulario = request.form['codigo_formulario']
 		nombre = request.form['nombre']
-		nombre_completo = request.form['nombre_completo']
 		with pyodbc.connect(conx_string) as conx:
 			cursor = conx.cursor()
-			cursor.execute('EXEC SP_EditarPerfil @codigo_formulario = ?, @nombre = ?, @nombre_completo = ?, @codigo=?', (codigo_formulario,nombre,nombre_completo, codigo))
+			cursor.execute('EXEC SP_EditarPerfil @codigo_formulario = ?, @nombre = ?, @codigo=?', (codigo_formulario, nombre, codigo))
 		flash('Perfil editado correctamente.', 'success')
 		return redirect(url_for('administrar_perfiles'))
 		# Agregar esto cuando agregue las validaciones y haya errores, para que no se borren los cambios ingresados

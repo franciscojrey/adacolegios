@@ -7,7 +7,6 @@
         <form method="POST">
             <label>La contraseña debe tener entre 8 y 20 caracteres.</label> </br>
             <label>Debe ser una combinación de letras mayúsculas y minúsculas, además de tener como mínimo 2 números.</label>
-            <label>Se recomienda usar una contraseña que no haya sido utilizada en otros sitios web.</label>
             <div class="form-group">
                 <!--<input type="text" name="email" pattern="[A-za-z0-9@_-.]{8,80}" class="form-control" value="{{request.form.email}}" required>-->
                 <input placeholder="Correo" type="text" name="email" class="form-control" value="{{request.form.email}}">
@@ -39,9 +38,8 @@
                         <option value="{{perfil.1}}">{{ perfil.1 }}</option>
                     {% endfor %}
                 </select>
-                
             </div>
-            <button type="submit" class="btn btn-primary">Registrar usuario</button>
+            <button type="submit" class="btn btn-primary">Agregar usuario</button>
         </form>
     </div>
 {% endblock %}

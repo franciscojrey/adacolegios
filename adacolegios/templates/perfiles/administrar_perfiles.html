@@ -11,7 +11,6 @@
           <th></th>
           <th>Código</th>
           <th>Nombre</th>
-          <th>Nombre completo</th>
           <th></th>
           <th></th>
         </tr>
@@ -20,7 +19,6 @@
             <td><input type="hidden" name="perfil_codigo" value="{{perfil.0}}"></td>
             <td>{{perfil.0}}</td>
             <td>{{perfil.1}}</td>
-            <td>{{perfil.2}}</td>
             <td><a href="editar_perfil/{{perfil.0}}" class="btn btn-warning">Editar</a></td>
             <td>
               <form action="{{url_for('eliminar_perfil', codigo=perfil.0)}}" method="post">
