@@ -15,8 +15,7 @@ conx_string = ('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+app.config["DB_S
 def cargar_notas():
 	# Chequear que esto esté bien hecho después de haber hecho todo en un solo stored procedure
 	with pyodbc.connect(conx_string) as conx:
-		fecha = datetime.datetime.now()
-		anio = fecha.year #Cuando esté todo listo hay que poner la variable '@anio' en vez de 2019 en SP_PlanillaAlumnosNotas
+		anio = datetime.datetime.now().year #Cuando esté todo listo hay que poner la variable '@anio' en vez de 2019 en SP_PlanillaAlumnosNotas. Ahora queda así porque no hay notas en el 2020
 		cursor = conx.cursor()
 		cursor.execute('EXEC SP_BuscaMateriaDocente @dni = ?', session['dni'])
 		materias = cursor.fetchall()
@@ -34,6 +33,8 @@ def cargar_notas():
 @app.route('/ver_notas')
 def ver_notas():
 	if session['tipo_de_usuario'] == 'alumno':
+		import datetime
+		anio = datetime.datetime.now().year #Cuando esté todo listo hay que poner la variable '@anio' en vez de 2019 en SP_BuscaNotasAlumno. Ahora queda así porque no hay notas en el 2020
 		with pyodbc.connect(conx_string) as conx:
 			cursor = conx.cursor()
 			cursor.execute('EXEC SP_BuscaNotasAlumno @dni = ?', session['dni'])
