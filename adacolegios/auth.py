@@ -12,11 +12,11 @@ from functools import wraps
 conx_string = ('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+app.config["DB_SERVER"]+';DATABASE='+app.config["DB_NAME"]+';UID='+app.config["DB_USERNAME"]+';PWD='+app.config["DB_PASSWORD"]+'')
 
 @app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
 def index():
 	return render_template('auth/index.html')
 
 @app.route('/inicio_sesion', methods=['GET', 'POST'])
-@app.route('/', methods=['GET', 'POST'])
 @verificar_no_loggeado
 def inicio_sesion():
 	#Ver si hace falta esto o era para Windows
@@ -60,7 +60,7 @@ def inicio_sesion():
 def cerrar_sesion():
 	session.clear()
 	flash('Has cerrado sesión.', 'success')
-	return redirect(url_for('inicio_sesion'))
+	return redirect(url_for('index'))
 
 @app.route('/recuperar_contraseña', methods=['GET', 'POST'])
 @verificar_no_loggeado

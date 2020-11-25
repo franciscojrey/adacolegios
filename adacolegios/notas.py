@@ -26,7 +26,7 @@ def cargar_notas():
 				cursor.execute('SP_PlanillaAlumnosNotas @anr = ?', materia_anr)
 				planilla_alumnos_notas = cursor.fetchall()
 				return render_template('notas/cargar_notas.html', materias = materias, planilla_alumnos_notas = planilla_alumnos_notas)
-			except TypeError:
+			except KeyError:
 				flash('Debe seleccionar una materia.','danger')
 	return render_template('notas/cargar_notas.html', materias = materias)
 

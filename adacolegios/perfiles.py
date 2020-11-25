@@ -58,9 +58,9 @@ def registro():
 						cursor.execute('EXEC SP_BuscaDniDocente_Registro @dni = ?', dni)
 					resultado_busca_dni = cursor.fetchone()
 					if resultado_busca_dni[0] == dni:
-						dni_formulario_existe = True		
+						dni_formulario_existe = True
 				except TypeError:
-					dni_formulario_existe = False	
+					dni_formulario_existe = False
 				except pyodbc.ProgrammingError:
 					campo_tipo_de_usuario_incorrecto = True
 				
@@ -153,11 +153,20 @@ def agregar_perfil():
 	if request.method == 'POST':
 		codigo_perfil = request.form['codigo_perfil']
 		nombre_perfil = request.form['nombre_perfil']
-		with pyodbc.connect(conx_string) as conx:
-			cursor = conx.cursor()
-			cursor.execute('EXEC SP_AgregarPerfil @codigo = ?, @nombre = ?', (codigo_perfil, nombre_perfil))
-		flash('Tarea creada correctamente.', 'success')
-		return redirect(url_for('administrar_perfiles'))
+		if codigo_perfil == "" or nombre_perfil == "":
+			flash('Debe completar todos los campos.', 'danger')
+		else:
+			with pyodbc.connect(conx_string) as conx:
+				cursor = conx.cursor()
+				# Corregir SP_BuscarPerfilExistente para que también busque el nombre, ahora no anda
+				cursor.execute('EXEC SP_BuscarPerfilExistente @cod = ?, @nombre = ?', codigo_perfil, nombre_perfil)
+				perfil_existente = cursor.fetchall()
+				if perfil_existente:
+					flash('Ya existe un perfil con el código o nombre ingresado.', 'danger')
+				else:
+					cursor.execute('EXEC SP_AgregarPerfil @codigo = ?, @nombre = ?', (codigo_perfil, nombre_perfil))
+					flash('Tarea creada correctamente.', 'success')
+					return redirect(url_for('administrar_perfiles'))
 	return render_template('perfiles/agregar_perfil.html')
 
 @app.route('/editar_perfil/<codigo>', methods=['GET', 'POST'])
@@ -174,9 +183,22 @@ def editar_perfil(codigo):
 		nombre = request.form['nombre']
 		with pyodbc.connect(conx_string) as conx:
 			cursor = conx.cursor()
-			cursor.execute('EXEC SP_EditarPerfil @codigo_formulario = ?, @nombre = ?, @codigo=?', (codigo_formulario, nombre, codigo))
-		flash('Perfil editado correctamente.', 'success')
-		return redirect(url_for('administrar_perfiles'))
+			# Ver si se puede simplificar esto para no repetir las sentencias SQL. Corregir SP_BuscarPerfilExistente para que también busque el nombre, ahora no anda
+			if codigo != codigo_formulario:
+				cursor.execute('EXEC SP_BuscarPerfilExistente @cod = ?, @nombre = ?', codigo_formulario, nombre)
+				perfil_existente = cursor.fetchall()
+				if perfil_existente:
+					flash('Ya existe un perfil con el código o nombre ingresado.', 'danger')
+				else: 
+					cursor.execute('EXEC SP_EditarPerfil @codigo_formulario = ?, @nombre = ?, @codigo=?', (codigo_formulario, nombre, codigo))
+					flash('Perfil editado correctamente.', 'success')
+					return redirect(url_for('administrar_perfiles'))
+			else:
+				cursor.execute('EXEC SP_EditarPerfil @codigo_formulario = ?, @nombre = ?, @codigo=?', (codigo_formulario, nombre, codigo))
+				flash('Perfil editado correctamente.', 'success')
+				return redirect(url_for('administrar_perfiles'))
+				
+			
 		# Agregar esto cuando agregue las validaciones y haya errores, para que no se borren los cambios ingresados
 		#form.codigo.data = codigo
 		#form.nombre.data = nombre
