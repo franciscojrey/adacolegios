@@ -19,3 +19,8 @@ input[type=number] {
 #texto {
   height: 200px;
 }
+
+#select_materia {
+  max-width: 600px;
+  margin-bottom: 30px;
+}
