@@ -131,7 +131,7 @@ def registro():
 					contraseña = sha256_crypt.encrypt(str(contraseña)) 
 					cursor = conx.cursor()
 					cursor.execute('EXEC SP_RegistrarUsuario_Registro @email = ?, @contraseña = ?, @fecha_de_alta = ?, @tipo_de_usuario = ?, @dni = ?', (email, contraseña, fecha_de_alta, tipo_de_usuario, dni))
-					flash('Su cuenta se ha registrado con éxito.', 'success')
+					flash('La cuenta se ha registrado con éxito.', 'success')
 		except pyodbc.IntegrityError:
 			flash('Ya existe una cuenta con el email ingresado.', 'danger')
 	return render_template('perfiles/registro.html', perfiles = perfiles)

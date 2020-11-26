@@ -8,7 +8,7 @@ def verificar_loggeado(f):
 		if 'loggeado' in session:
 			return f(*args, **kwargs)
 		else:
-			flash('Acceso no autorizado, debe iniciar sesión.', 'danger')
+			flash('Si desea dirigirse a esa página primero debe iniciar sesión.', 'danger')
 			return redirect(url_for('inicio_sesion'))
 	return wrap
 
@@ -20,7 +20,7 @@ def verificar_no_loggeado(l):
 			return l(*args, **kwargs)
 		# Chequear por qué cuando entro después de prender la pc me sale este cartel de abajo
 		else:
-			flash('Si desea dirigirse a esa página primero debe cerrar sesión', 'danger')
+			flash('Si desea dirigirse a esa página primero debe cerrar sesión.', 'danger')
 			return redirect(url_for('index'))
 	return wrap
 
