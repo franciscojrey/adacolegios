@@ -20,7 +20,7 @@ def cargar_notas():
 		cursor.execute('EXEC SP_BuscaMateriaDocente @dni = ?', session['dni'])
 		materias = cursor.fetchall()
 		if request.method == 'POST':
-			try:
+			try: 
 				cursor = conx.cursor()	
 				materia_anr = request.form['materia']
 				cursor.execute('SP_PlanillaAlumnosNotas @anr = ?', materia_anr)
@@ -33,6 +33,7 @@ def cargar_notas():
 @app.route('/ver_notas')
 def ver_notas():
 	if session['tipo_de_usuario'] == 'alumno':
+		#Este import está mal acá creo
 		import datetime
 		anio = datetime.datetime.now().year #Cuando esté todo listo hay que poner la variable '@anio' en vez de 2019 en SP_BuscaNotasAlumno. Ahora queda así porque no hay notas en el 2020
 		with pyodbc.connect(conx_string) as conx:
